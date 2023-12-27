@@ -36,7 +36,6 @@ federal_tax = (federal_tax_rate / 100) * gross_pay
 state_tax_rate = state_withholding_tax()
 state_tax = (state_tax_rate / 100) * gross_pay
 
-
 total_deduction = federal_tax + state_tax
 net_pay = gross_pay - total_deduction
 
