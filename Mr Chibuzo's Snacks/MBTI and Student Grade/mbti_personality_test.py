@@ -61,8 +61,8 @@ def extroverted_vs_introverted():
     no_of_b = 0
     count = 0
 
-    for question in extroverted_introverted:
-        if question == "A":
+    for answers in extroverted_introverted:
+        if answers == "A":
             new_text = get_mbti_questions(count).split("\t")[0]
             print(new_text)
             no_of_a += 1
@@ -87,8 +87,8 @@ def sensing_vs_intuitive():
     no_of_b = 0
     count = 1
 
-    for question in sensing_intuitive:
-        if question == "A":
+    for answers in sensing_intuitive:
+        if answers == "A":
             new_text = get_mbti_questions(count).split("\t")[0]
             print(new_text)
             no_of_a += 1
@@ -113,8 +113,8 @@ def thinking_vs_feeling():
     no_of_b = 0
     count = 2
 
-    for question in thinking_feeling:
-        if question == "A":
+    for answers in thinking_feeling:
+        if answers == "A":
             new_text = get_mbti_questions(count).split("\t")[0]
             print(new_text)
             no_of_a += 1
@@ -139,8 +139,8 @@ def judging_vs_perceptive():
     no_of_b = 0
     count = 3
 
-    for question in judging_perceptive:
-        if question == "A":
+    for answers in judging_perceptive:
+        if answers == "A":
             new_text = get_mbti_questions(count).split("\t")[0]
             print(new_text)
             no_of_a += 1
