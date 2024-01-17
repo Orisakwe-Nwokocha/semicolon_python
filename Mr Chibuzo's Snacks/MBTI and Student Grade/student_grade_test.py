@@ -1,7 +1,7 @@
 from student_grade import *
 
 sample_grades = [[4, 32], [89, 23], [45, 67], [23, 34], [12, 98]]
-grades_constructor(sample_grades)
+set_grades(sample_grades)
 
 
 def test_get_total():
