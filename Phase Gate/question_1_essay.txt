@@ -1,0 +1,5 @@
+1. The purpose of the type() function is to check the data type of a variable and/or value
+2. We need variables to hold/store values for later use
+3. user_age = 25
+4. The code will print Alice
+5. total_cost = 5 * 12 || result = 5 * 12 total_cost = result
