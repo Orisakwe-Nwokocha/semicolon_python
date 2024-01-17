@@ -1,11 +1,11 @@
 grades = []
 
 
-def grades_constructor(multidimensional_list):
+def set_grades(multidimensional_list):
     grades.extend(multidimensional_list)
 
 
-def set_grades_list():
+def input_grades():
     students_row = int(input("How many students do you have?\n"))
     while students_row <= 0:
         students_row = int(input("Invalid input\nHow many students do you have?\n"))
