@@ -12,7 +12,6 @@ def add_contact(contact_name: str, phone_number: str):
     contacts.append(contacts_dict)
 
 
-
 def delete_contact(contact_name: str):
     for contact in contacts:
         if contact["name"] == contact_name:
@@ -29,7 +28,7 @@ def search_contact(contact_name: str) -> str:
     if contact_info:
         return contact_info
     else:
-        return f"No results for {contact_name}"
+        return f"No results for \"{contact_name}\""
 
 
 def view_contacts() -> str:
@@ -45,11 +44,17 @@ def view_contacts() -> str:
         return "Phonebook is empty"
 
 
-def edit_contact(contact_name: str, new_name: str):
+def edit_one_contact_info(contact_name: str, contact_info_to_edit: int, new_contact_info: str):
     for contact in contacts:
         if contact["name"] == contact_name:
+            if contact_info_to_edit == 1:
+                contact["name"] = new_contact_info
+            elif contact_info_to_edit == 2:
+                contact["phone_number"] = new_contact_info
+
+
+def edit_all_contact_info(contact_name: str, new_name: str, phone_number: str, new_phone_number: str):
+    for contact in contacts:
+        if contact["name"] == contact_name and contact["phone_number"] == phone_number:
             contact["name"] = new_name
-
-
-def edit_contact(contact_name: str, new_number: str):
-# def edit_contact(contact_name: str, new_name: str, new_number: str):
+            contact["phone_number"] = new_phone_number
