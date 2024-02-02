@@ -12,10 +12,12 @@ class Phonebook:
         contacts_dict = {"name": contact_name, "phone_number": phone_number}
         self.contacts.append(contacts_dict)
 
-    def delete_contact(self, contact_name: str):
+    def delete_contact(self, contact_name: str, phone_number: str):
         for contact in self.contacts:
-            if contact["name"] == contact_name:
+            condition = contact["name"] == contact_name and contact["phone_number"] == phone_number
+            if condition:
                 self.contacts.remove(contact)
+                break
 
     def search_contact(self, contact_name: str) -> str:
         contact_info = ""
@@ -40,16 +42,10 @@ class Phonebook:
         else:
             return "Phonebook is empty"
 
-    def edit_one_contact_info(self, contact_name: str, contact_info_to_edit: int, new_contact_info: str):
+    def edit_contact(self, contact_name: str, new_name: str, phone_number: str, new_phone_number: str):
         for contact in self.contacts:
-            if contact["name"] == contact_name:
-                if contact_info_to_edit == 1:
-                    contact["name"] = new_contact_info
-                elif contact_info_to_edit == 2:
-                    contact["phone_number"] = new_contact_info
-
-    def edit_all_contact_info(self, contact_name: str, new_name: str, phone_number: str, new_phone_number: str):
-        for contact in self.contacts:
-            if contact["name"] == contact_name and contact["phone_number"] == phone_number:
+            condition = contact["name"] == contact_name and contact["phone_number"] == phone_number
+            if condition:
                 contact["name"] = new_name
                 contact["phone_number"] = new_phone_number
+            break

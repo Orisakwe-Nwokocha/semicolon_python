@@ -23,7 +23,7 @@ def test_that_phone_book_can_delete_contact(nokia_phonebook):
     nokia_phonebook.add_contact("Izu", "878")
     assert len(nokia_phonebook.get_contacts()) == 3
 
-    nokia_phonebook.delete_contact("Ajiri")
+    nokia_phonebook.delete_contact("Ajiri", "1234")
     assert len(nokia_phonebook.get_contacts()) == 2
 
 
@@ -64,7 +64,8 @@ def test_edit_one_contact_info_only_contact_name_is_edited(nokia_phonebook):
     assert len(nokia_phonebook.get_contacts()) == 1
     assert nokia_phonebook.search_contact("Orisakwe Nwokocha") == "No results for \"Orisakwe Nwokocha\""
 
-    nokia_phonebook.edit_one_contact_info("Orisha", 1, "Orisakwe Nwokocha")
+    nokia_phonebook.edit_contact("Orisha", "Orisakwe Nwokocha",
+                                 "08035729982", "08035729982")
     assert nokia_phonebook.search_contact("Orisakwe Nwokocha") == "Orisakwe Nwokocha:\n08035729982\n"
 
 
@@ -74,7 +75,8 @@ def test_edit_one_contact_info_only_phone_number_is_edited(nokia_phonebook):
     assert len(nokia_phonebook.get_contacts()) == 1
     assert nokia_phonebook.search_contact("Orisha") != "Orisha:\n08125358910\n"
 
-    nokia_phonebook.edit_one_contact_info("Orisha", 2, "08125358910")
+    nokia_phonebook.edit_contact("Orisha", "Orisha", "08035729982",
+                                 "08125358910")
     assert nokia_phonebook.search_contact("Orisha") == "Orisha:\n08125358910\n"
 
 
@@ -84,5 +86,6 @@ def test_edit_all_contact_info_all_info_are_edited(nokia_phonebook):
     assert len(nokia_phonebook.get_contacts()) == 1
     assert nokia_phonebook.search_contact("Orisha") != "Orisakwe Nwokocha:\n08125358910\n"
 
-    nokia_phonebook.edit_all_contact_info("Orisha", "Orisakwe Nwokocha", "08035729982", "08125358910")
+    nokia_phonebook.edit_contact("Orisha", "Orisakwe Nwokocha",
+                                 "08035729982", "08125358910")
     assert nokia_phonebook.search_contact("Orisakwe Nwokocha") == "Orisakwe Nwokocha:\n08125358910\n"
