@@ -1,3 +1,5 @@
+from typing import List
+
 from firearm.magazine import Magazine
 
 
@@ -8,7 +10,7 @@ class Gun:
         self.__magazine = Magazine(magazine_capacity)
         self.__caliber = caliber
 
-    def load_magazine(self, bullets):
+    def load_magazine(self, bullets: List):
         for bullet in bullets:
             if bullet.get_caliber() == self.__caliber:
                 self.__magazine.load_bullet(bullet)
@@ -18,7 +20,7 @@ class Gun:
         if bullet:
             return f"Firing {self.__caliber} caliber bullet from {self.__model} {self.__category}"
         else:
-            return f"No bullet in the magazine"
+            return "No bullet in the magazine"
 
     def number_of_bullets(self) -> int:
         return self.__magazine.number_of_bullets()

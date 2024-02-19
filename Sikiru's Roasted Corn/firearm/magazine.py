@@ -13,8 +13,6 @@ class Magazine:
     def fire_bullet(self):
         if self.__bullets:
             return self.unload_bullet()
-        else:
-            return "Magazine is empty"
 
     def number_of_bullets(self) -> int:
         return len(self.__bullets)
