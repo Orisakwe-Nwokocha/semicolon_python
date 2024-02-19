@@ -1,5 +1,3 @@
-from typing import List
-
 from firearm.magazine import Magazine
 
 
@@ -10,13 +8,13 @@ class Gun:
         self.__magazine = Magazine(magazine_capacity)
         self.__caliber = caliber
 
-    def load_magazine(self, bullets: List):
+    def load_magazine(self, *bullets):
         for bullet in bullets:
             if bullet.get_caliber() == self.__caliber:
                 self.__magazine.load_bullet(bullet)
 
     def fire(self):
-        bullet = self.__magazine.fire_bullet()
+        bullet = self.__magazine.unload_bullet()
         if bullet:
             return f"Firing {self.__caliber} caliber bullet from {self.__model} {self.__category}"
         else:

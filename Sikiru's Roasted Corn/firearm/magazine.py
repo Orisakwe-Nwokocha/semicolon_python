@@ -8,11 +8,8 @@ class Magazine:
             self.__bullets.append(bullet)
 
     def unload_bullet(self):
-        self.__bullets.pop()
-
-    def fire_bullet(self):
         if self.__bullets:
-            return self.unload_bullet()
+            return self.__bullets.pop()
 
     def number_of_bullets(self) -> int:
         return len(self.__bullets)
