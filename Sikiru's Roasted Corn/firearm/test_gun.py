@@ -37,9 +37,24 @@ class TestGun(unittest.TestCase):
         for count in range(5):
             self.pistol.load_magazine(Bullet("9mm"))
 
+        self.pistol.toggle()
         print(self.pistol.fire())
 
         self.assertEqual(4, self.pistol.number_of_bullets())
 
     def test_given0Bullets_whenFired_thenMagazineIsEmpty(self):
+        self.pistol.toggle()
         self.assertEqual("No bullet in the magazine", self.pistol.fire())
+
+    def test_safetyIsOn_turnItOff_safetyIsOff(self):
+        self.assertTrue(self.pistol.is_on())
+
+        self.pistol.toggle()
+        self.assertFalse(self.pistol.is_on())
+
+    def test_safetyIsOff_turnItOn_safetyIsOn(self):
+        self.pistol.toggle()
+        self.assertFalse(self.pistol.is_on())
+
+        self.pistol.toggle()
+        self.assertTrue(self.pistol.is_on())
