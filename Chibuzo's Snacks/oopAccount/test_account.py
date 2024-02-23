@@ -13,18 +13,18 @@ class TestAccount(unittest.TestCase):
     def test_account_is_empty(self):
         self.assertEqual(0, self.account.check_balance("1234"))
 
-    def test_deposit_10k(self):
+    def test_deposit10k_balanceIs10k(self):
         self.account.deposit(10_000)
 
         self.assertEqual(10_000, self.account.check_balance("1234"))
 
-    def test_deposit_twice(self):
+    def test_deposit10Twice_balanceIs20k(self):
         self.account.deposit(10_000)
         self.account.deposit(10_000)
 
         self.assertEqual(20_000, self.account.check_balance("1234"))
 
-    def test_deposit_non_positive_amount(self):
+    def test_depositNonPositiveAmount_throwsInvalidAmountException(self):
         with self.assertRaises(InvalidAmountException):
             self.account.deposit(0)
         with self.assertRaises(InvalidAmountException):
@@ -49,7 +49,7 @@ class TestAccount(unittest.TestCase):
 
         self.assertEqual(10_000, self.account.check_balance("1234"))
 
-    def test_withdraw_more_than_balance(self):
+    def test_withdrawMoreThanAvailableFunds_raisesInsufficientFundsException(self):
         self.account.deposit(10_000)
         self.assertEqual(10_000, self.account.check_balance("1234"))
 
@@ -60,7 +60,7 @@ class TestAccount(unittest.TestCase):
 
         self.assertEqual(10_000, self.account.check_balance("1234"))
 
-    def test_withdraw_using_incorrect_pin(self):
+    def test_withdrawUsingIncorrectPin_raisesInvalidPinException(self):
         self.account.deposit(10_000)
         self.assertEqual(10_000, self.account.check_balance("1234"))
 
@@ -69,17 +69,17 @@ class TestAccount(unittest.TestCase):
 
         self.assertEqual(10_000, self.account.check_balance("1234"))
 
-    def test_check_balance_using_incorrect_pin(self):
+    def test_checkBalanceUsingIncorrectPin_raisesInvalidPinException(self):
         with self.assertRaises(InvalidPinException):
             self.account.check_balance("4444")
 
-    def test_check_balance_with_incorrect_pin_exception_message(self):
+    def test_incorrectPinException_message(self):
         with self.assertRaises(InvalidPinException) as e:
             self.account.check_balance("0000")
 
         self.assertEqual("PIN provided is not valid.", str(e.exception))
 
-    def test_deposit_withdraw_with_incorrect_pin_test_insufficient_exception_message(self):
+    def test_insufficientFundsException_message(self):
         self.account.deposit(2_000)
         self.assertEqual(2_000, self.account.check_balance("1234"))
 
@@ -89,7 +89,7 @@ class TestAccount(unittest.TestCase):
 
         self.assertEqual(2_000, self.account.check_balance("1234"))
 
-    def test_deposit_negative_amount(self):
+    def test_invalidAmountException_message(self):
         self.assertEqual(0, self.account.check_balance("1234"))
 
         with self.assertRaises(InvalidAmountException) as e:
