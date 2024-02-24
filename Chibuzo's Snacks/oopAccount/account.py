@@ -5,7 +5,7 @@ from oopAccount.exceptions.invalid_pin_exception import InvalidPinException
 
 class Account:
     def __init__(self, name: str, number: int, pin: str):
-        self._validate_pin_format_and_length(pin)
+        self.validate_pin_format_and_length(pin)
 
         self.__name = name
         self.__balance = 0
@@ -13,7 +13,7 @@ class Account:
         self.__pin = pin
 
     @staticmethod
-    def _validate_pin_format_and_length(pin: str):
+    def validate_pin_format_and_length(pin: str):
         Account._validate_pin_format(pin)
         Account._validate_pin_length(pin)
 
