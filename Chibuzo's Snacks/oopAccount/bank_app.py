@@ -51,7 +51,7 @@ class BankApp:
         pin = BankApp.__user_input("Enter your pin to login:")
 
         while account.is_incorrect(pin):
-            BankApp.__print_message("Incorrect pin!!!\nPlease enter your pin to login:")
+            BankApp.__print_message("Incorrect pin!!!:")
             pin = BankApp.__user_input("Enter your pin to login:")
 
         self.__go_to_main_menu(account)
