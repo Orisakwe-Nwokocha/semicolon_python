@@ -57,7 +57,7 @@ class BankApp:
         self.__go_to_main_menu(account)
 
     @staticmethod
-    def __user_input(prompt):
+    def __user_input(prompt) -> str:
         return simpledialog.askstring("Input", prompt)
 
     @staticmethod
@@ -67,7 +67,7 @@ class BankApp:
     @staticmethod
     def __exit_app():
         BankApp.__print_message("Exiting...")
-        time.sleep(2.5)
+        time.sleep(2)
 
         exit(0)
 
@@ -88,17 +88,17 @@ class BankApp:
         if user_choice == "1":
             self.__deposit(account)
         elif user_choice == "2":
-            withdraw(account)
+            self.__withdraw(account)
         elif user_choice == "3":
-            transfer(account)
+            self.__transfer(account)
         elif user_choice == "4":
-            check_balance(account)
+            self.__check_balance(account)
         elif user_choice == "5":
-            remove_account(account)
+            self.__remove_account(account)
         elif user_choice == "6":
-            exit_app()
+            self.__exit_app()
         else:
-            go_to_main_menu(account)
+            self.__go_to_main_menu(account)
 
     def __deposit(self, account: Account):
         amount = BankApp.__user_input("Enter amount to deposit:")
@@ -111,101 +111,103 @@ class BankApp:
         finally:
             self.__go_to_main_menu(account)
 
-    def remove_account(self, account: Account):
+    def __remove_account(self, account: Account):
         pin = BankApp.__user_input("Enter account pin:")
         try:
-            first_bank.remove_account(account.get_number(), pin)
-            print_message("Account successfully removed.")
+            self.__first_bank.remove_account(account.get_number(), pin)
+            BankApp.__print_message("Account successfully removed.")
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            exit_app()
+            self.__exit_app()
 
-    def check_balance(account):
-        pin = user_input("Enter account pin:")
+    def __check_balance(self, account: Account):
+        pin = BankApp.__user_input("Enter account pin:")
         try:
-            balance = first_bank.check_balance(account.get_number(), pin)
-            print_message(f"{account.get_name()} balance: ₦{balance}")
+            balance = self.__first_bank.check_balance(account.get_number(), pin)
+            BankApp.__print_message(f"{account.get_name()} balance: ₦{balance}")
         except Exception as e:
-            print_message(str(e))
+            BankApp.__print_message(str(e))
         finally:
-            go_to_main_menu(account)
+            self.__go_to_main_menu(account)
 
-    def transfer(account):
-        user_choice = user_input("""Enter 1 to transfer to first bank accounts
-        Enter 2 to transfer to other bank accounts""")
+    def __transfer(self, account: Account):
+        user_choice = BankApp.__user_input("""Enter 1 to transfer to first bank accounts
+Enter 2 to transfer to other bank accounts""")
 
         if user_choice == "1":
-            intra_bank_transfer(account)
+            self.__intra_bank_transfer(account)
         elif user_choice == "2":
-            inter_bank_transfer(account)
-        else:
-            go_to_main_menu(account)
+            self.__inter_bank_transfer(account)
 
-    def inter_bank_transfer(account):
-        for bank in other_banks:
-            print_message("*" * 5 + bank.name + "*" * 5)
+        self.__go_to_main_menu(account)
 
-        choice = user_input("Select option (1 or 2):")
+    def __inter_bank_transfer(self, account: Account):
+        for bank in self.__other_banks:
+            BankApp.__print_message("*" * 5 + bank.get_name() + "*" * 5)
+
+        choice = BankApp.__user_input("Select option (1 or 2):")
+
         if choice == "1":
-            transfer_to_gt_bank_accounts(account)
+            self.__transfer_to_gt_bank_accounts(account)
         elif choice == "2":
-            transfer_to_access_bank_accounts(account)
+            self.__transfer_to_access_bank_accounts(account)
 
-        go_to_main_menu(account)
+        self.__go_to_main_menu(account)
 
-    def transfer_to_access_bank_accounts(account):
-        receiver_account_number = user_input("Enter account number to credit:")
-        amount = user_input("Enter amount to transfer:")
-        pin = user_input("Enter account pin:")
-
-        try:
-            account.withdraw(int(amount), pin)
-            other_banks[-1].deposit(int(receiver_account_number), int(amount))
-            print_message("Amount was successfully transferred.")
-        except Exception as e:
-            print_message(str(e))
-        finally:
-            go_to_main_menu(account)
-
-    def transfer_to_gt_bank_accounts(account):
-        receiver_account_number = user_input("Enter account number to credit:")
-        amount = user_input("Enter amount to transfer:")
-        pin = user_input("Enter account pin:")
+    def __transfer_to_access_bank_accounts(self, account: Account):
+        receiver_account_number = BankApp.__user_input("Enter account number to credit:")
+        amount = BankApp.__user_input("Enter amount to transfer:")
+        pin = BankApp.__user_input("Enter account pin:")
 
         try:
             account.withdraw(int(amount), pin)
-            other_banks[0].deposit(int(receiver_account_number), int(amount))
-            print_message("Amount was successfully transferred.")
+            self.__other_banks[-1].deposit(int(receiver_account_number), int(amount))
+            BankApp.__print_message("Amount was successfully transferred.")
         except Exception as e:
-            print_message(str(e))
+            BankApp.__print_message(str(e))
         finally:
-            go_to_main_menu(account)
+            self.__go_to_main_menu(account)
 
-    def intra_bank_transfer(account):
-        receiver_account_number = user_input("Enter account number to credit:")
-        amount = user_input("Enter amount to transfer:")
-        pin = user_input("Enter account pin:")
+    def __transfer_to_gt_bank_accounts(self, account: Account):
+        receiver_account_number = BankApp.__user_input("Enter account number to credit:")
+        amount = BankApp.__user_input("Enter amount to transfer:")
+        pin = BankApp.__user_input("Enter account pin:")
 
         try:
-            first_bank.transfer(account.get_number(), int(receiver_account_number), int(amount), pin)
-            print_message("Amount was successfully transferred.")
+            account.withdraw(int(amount), pin)
+            self.__other_banks[0].deposit(int(receiver_account_number), int(amount))
+            BankApp.__print_message("Amount was successfully transferred.")
         except Exception as e:
-            print_message(str(e))
+            BankApp.__print_message(str(e))
         finally:
-            go_to_main_menu(account)
+            self.__go_to_main_menu(account)
 
-    def withdraw(account):
-        amount = user_input("Enter amount to withdraw:")
-        pin = user_input("Enter account pin:")
+    def __intra_bank_transfer(self, account):
+        receiver_account_number = BankApp.__user_input("Enter account number to credit:")
+        amount = BankApp.__user_input("Enter amount to transfer:")
+        pin = BankApp.__user_input("Enter account pin:")
 
         try:
-            first_bank.withdraw(account.get_number(), int(amount), pin)
-            print_message("Withdraw was successful.")
+            self.__first_bank.transfer(account.get_number(), int(receiver_account_number), int(amount), pin)
+            BankApp.__print_message("Amount was successfully transferred.")
         except Exception as e:
-            print_message(str(e))
+            BankApp.__print_message(str(e))
         finally:
-            go_to_main_menu(account)
+            self.__go_to_main_menu(account)
+
+    def __withdraw(self, account: Account):
+        amount = BankApp.__user_input("Enter amount to withdraw:")
+        pin = BankApp.__user_input("Enter account pin:")
+
+        try:
+            self.__first_bank.withdraw(account.get_number(), int(amount), pin)
+            BankApp.__print_message("Withdraw was successful.")
+        except Exception as e:
+            BankApp.__print_message(str(e))
+        finally:
+            self.__go_to_main_menu(account)
 
 
-
+startApp = BankApp()
+startApp.main()

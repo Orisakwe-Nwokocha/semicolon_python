@@ -57,3 +57,6 @@ class Bank:
             raise InvalidPinException("PIN provided is not valid.")
 
         self.__accounts.remove(account)
+
+    def get_name(self) -> str:
+        return self.__name
