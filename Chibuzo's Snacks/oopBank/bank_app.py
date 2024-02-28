@@ -1,9 +1,9 @@
 import time
 from tkinter import simpledialog, messagebox
 
-from oopAccount.account import Account
-from oopAccount.bank import Bank
-from oopAccount.exceptions.invalid_pin_exception import InvalidPinException
+from oopBank.account import Account
+from oopBank.bank import Bank
+from oopBank.exceptions.invalid_pin_exception import InvalidPinException
 
 
 class BankApp:

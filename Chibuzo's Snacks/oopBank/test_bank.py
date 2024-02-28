@@ -1,7 +1,7 @@
 import unittest
 
-from oopAccount.account import Account
-from oopAccount.bank import Bank
+from oopBank.account import Account
+from oopBank.bank import Bank
 
 
 class TestBank(unittest.TestCase):

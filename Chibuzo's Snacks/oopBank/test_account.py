@@ -1,9 +1,9 @@
 import unittest
 
-from oopAccount.account import Account
-from oopAccount.exceptions.insufficient_funds_exception import InsufficientFundsException
-from oopAccount.exceptions.invalid_amount_exception import InvalidAmountException
-from oopAccount.exceptions.invalid_pin_exception import InvalidPinException
+from oopBank.account import Account
+from oopBank.exceptions.insufficient_funds_exception import InsufficientFundsException
+from oopBank.exceptions.invalid_amount_exception import InvalidAmountException
+from oopBank.exceptions.invalid_pin_exception import InvalidPinException
 
 
 class TestAccount(unittest.TestCase):
