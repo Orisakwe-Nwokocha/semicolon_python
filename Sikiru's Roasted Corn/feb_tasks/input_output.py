@@ -1,4 +1,4 @@
-from tkinter import simpledialog, messagebox
+from tkinter import simpledialog
 
 
 class InputOutput:
