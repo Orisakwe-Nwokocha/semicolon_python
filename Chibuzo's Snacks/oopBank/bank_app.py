@@ -13,6 +13,16 @@ class BankApp:
 
     def main(self):
         self.__add_other_banks()
+        self.__start_app()
+
+    def __start_app(self):
+        choice = messagebox.askyesnocancel("Do you want to create a new account?")
+        if choice is None:
+            BankApp.__exit_app()
+        elif choice:
+            self.__register_customer()
+        else:
+            self.__login()
 
     def __add_other_banks(self):
         gt_bank = Bank("Guaranty Trust Bank of Nigeria PLC")
@@ -21,7 +31,8 @@ class BankApp:
         self.__other_banks.append(gt_bank)
         self.__other_banks.append(access_bank)
 
-        self.__register_customer()
+        self.__other_banks[0].register_customer("Jane", "Doe", "0000")
+        self.__other_banks[1].register_customer("FirstName", "LastName", "4321")
 
     def __register_customer(self):
         BankApp.__print_message("Welcome to First Bank.\nEnter your details to create an account")
@@ -40,21 +51,25 @@ class BankApp:
             BankApp.__print_message("Account successfully created.")
             BankApp.__print_message("Your account number is " + str(account.get_number()))
 
-            self.__first_bank.register_customer("FirstName", "LastName", "1020")
-            self.__other_banks[0].register_customer("Jane", "Doe", "0000")
-            self.__other_banks[1].register_customer("FirstName", "LastName", "4321")
+            self.__login()
 
-            self.__login(account)
-
-    def __login(self, account: Account):
+    def __login(self):
         BankApp.__print_message("Welcome to first mobile app!!!")
-        pin = BankApp.__user_input("Enter your pin to login:")
+        account_number = self.__user_input("Enter your account number: ")
 
-        while account.is_incorrect(pin):
-            BankApp.__print_message("Incorrect pin!!!:")
+        account: Account = Account("", 1, "0000")
+        try:
+            account: Account = self.__first_bank.find_account(int(account_number))
+        except ValueError as e:
+            BankApp.__print_message(f"Error: {e}")
+            self.__start_app()
+        finally:
             pin = BankApp.__user_input("Enter your pin to login:")
+            while account.is_incorrect(pin):
+                BankApp.__print_message("Incorrect pin!!!:")
+                self.__login()
 
-        self.__go_to_main_menu(account)
+            self.__go_to_main_menu(account)
 
     @staticmethod
     def __user_input(prompt) -> str:
@@ -66,36 +81,42 @@ class BankApp:
 
     @staticmethod
     def __exit_app():
-        BankApp.__print_message("Exiting...")
+        BankApp.__print_message("Thank you for banking with us\nExiting...")
         time.sleep(2)
 
         exit(0)
 
     def __go_to_main_menu(self, account: Account):
         main_menu = """What do you want to do today?
-
-        1. Deposit
-        2. Withdraw
-        3. Transfer
-        4. Check Balance
-        5. Close Account
-        6. Exit
+        
+        1. Create a new account
+        2. Deposit
+        3. Withdraw
+        4. Transfer
+        5. Check Balance
+        6. Close Account
+        7. Log Out
+        8. Exit App
 
         Select option:"""
 
         user_choice = BankApp.__user_input(main_menu)
 
         if user_choice == "1":
-            self.__deposit(account)
+            self.__register_customer()
         elif user_choice == "2":
-            self.__withdraw(account)
+            self.__deposit(account)
         elif user_choice == "3":
-            self.__transfer(account)
+            self.__withdraw(account)
         elif user_choice == "4":
-            self.__check_balance(account)
+            self.__transfer(account)
         elif user_choice == "5":
-            self.__remove_account(account)
+            self.__check_balance(account)
         elif user_choice == "6":
+            self.__remove_account(account)
+        elif user_choice == "7":
+            self.__logout()
+        elif user_choice == "8":
             self.__exit_app()
         else:
             self.__go_to_main_menu(account)
@@ -207,6 +228,10 @@ Enter 2 to transfer to other bank accounts""")
             BankApp.__print_message(str(e))
         finally:
             self.__go_to_main_menu(account)
+
+    def __logout(self):
+        BankApp.__print_message("Logging out...")
+        self.__login()
 
 
 startApp = BankApp()

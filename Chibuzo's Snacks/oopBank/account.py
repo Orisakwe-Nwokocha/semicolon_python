@@ -62,11 +62,11 @@ class Account:
         if amount <= 0:
             raise InvalidAmountException("Amount must be greater than zero.")
 
-    def get_number(self):
+    def get_number(self) -> int:
         return self.__number
 
-    def is_incorrect(self, pin: str):
+    def is_incorrect(self, pin: str) -> bool:
         return self.__pin != pin
 
-    def get_name(self):
+    def get_name(self) -> str:
         return self.__name
