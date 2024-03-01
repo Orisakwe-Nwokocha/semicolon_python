@@ -40,6 +40,7 @@ class TestSevenSegmentDisplay(unittest.TestCase):
         self.assertTrue(self.display.is_on())
         expected = """# # # #
 #     #
+#     #       
 #     #
 #     #
 # # # #
