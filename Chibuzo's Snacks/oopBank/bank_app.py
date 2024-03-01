@@ -16,7 +16,7 @@ class BankApp:
         self.__start_app()
 
     def __start_app(self):
-        choice = messagebox.askyesnocancel("Do you want to create a new account?")
+        choice = messagebox.askyesnocancel("Welcome to First Bank", "Do you want to create a new account?")
         if choice is None:
             BankApp.__exit_app()
         elif choice:
@@ -35,29 +35,28 @@ class BankApp:
         self.__other_banks[1].register_customer("FirstName", "LastName", "4321")
 
     def __register_customer(self):
-        BankApp.__print_message("Welcome to First Bank.\nEnter your details to create an account")
+        BankApp.__print_message("Enter your details to create an account")
 
         first_name = BankApp.__user_input("Enter first name:")
         last_name = BankApp.__user_input("Enter last name:")
         pin = BankApp.__user_input("Enter pin:")
 
         try:
-            Account.validate_pin_format_and_length(pin)
-        except InvalidPinException:
-            BankApp.__print_message("Account creation was not successful")
-            self.__register_customer()
-        finally:
             account: Account = self.__first_bank.register_customer(first_name, last_name, pin)
             BankApp.__print_message("Account successfully created.")
             BankApp.__print_message("Your account number is " + str(account.get_number()))
-
+        except Exception as e:
+            BankApp.__print_message("Account creation was not successful")
+            BankApp.__print_message(e)
+            self.__register_customer()
+        finally:
             self.__login()
 
     def __login(self):
         BankApp.__print_message("Welcome to first mobile app!!!")
         account_number = self.__user_input("Enter your account number: ")
 
-        account: Account = Account("", 1, "0000")
+        account: Account = Account("", -1, "0000")
         try:
             account: Account = self.__first_bank.find_account(int(account_number))
         except ValueError as e:
@@ -65,7 +64,7 @@ class BankApp:
             self.__start_app()
         finally:
             pin = BankApp.__user_input("Enter your pin to login:")
-            while account.is_incorrect(pin):
+            if account.is_incorrect(pin):
                 BankApp.__print_message("Incorrect pin!!!:")
                 self.__login()
 
