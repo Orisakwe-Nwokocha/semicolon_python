@@ -9,6 +9,7 @@ class Bank:
         self.__lastAccountCreated = 0
 
     def register_customer(self, first_name: str, last_name: str, pin: str) -> Account:
+        Account.validate_pin_format_and_length(pin)
         name = first_name + " " + last_name
         number = self.generate_account_number()
 

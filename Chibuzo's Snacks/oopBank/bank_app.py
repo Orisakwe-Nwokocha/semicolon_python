@@ -68,7 +68,7 @@ class BankApp:
                 BankApp.__print_message("Incorrect pin!!!:")
                 self.__login()
 
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     @staticmethod
     def __user_input(prompt) -> str:
@@ -85,7 +85,7 @@ class BankApp:
 
         exit(0)
 
-    def __go_to_main_menu(self, account: Account):
+    def __goto_main_menu(self, account: Account):
         main_menu = """What do you want to do today?
         
         1. Create a new account
@@ -118,7 +118,7 @@ class BankApp:
         elif user_choice == "8":
             self.__exit_app()
         else:
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     def __deposit(self, account: Account):
         amount = BankApp.__user_input("Enter amount to deposit:")
@@ -129,17 +129,18 @@ class BankApp:
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     def __remove_account(self, account: Account):
         pin = BankApp.__user_input("Enter account pin:")
         try:
             self.__first_bank.remove_account(account.get_number(), pin)
             BankApp.__print_message("Account successfully removed.")
+            self.__logout()
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            self.__exit_app()
+            self.__goto_main_menu(account)
 
     def __check_balance(self, account: Account):
         pin = BankApp.__user_input("Enter account pin:")
@@ -149,7 +150,7 @@ class BankApp:
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     def __transfer(self, account: Account):
         user_choice = BankApp.__user_input("""Enter 1 to transfer to first bank accounts
@@ -160,7 +161,7 @@ Enter 2 to transfer to other bank accounts""")
         elif user_choice == "2":
             self.__inter_bank_transfer(account)
 
-        self.__go_to_main_menu(account)
+        self.__goto_main_menu(account)
 
     def __inter_bank_transfer(self, account: Account):
         for bank in self.__other_banks:
@@ -173,7 +174,7 @@ Enter 2 to transfer to other bank accounts""")
         elif choice == "2":
             self.__transfer_to_access_bank_accounts(account)
 
-        self.__go_to_main_menu(account)
+        self.__goto_main_menu(account)
 
     def __transfer_to_access_bank_accounts(self, account: Account):
         receiver_account_number = BankApp.__user_input("Enter account number to credit:")
@@ -187,7 +188,7 @@ Enter 2 to transfer to other bank accounts""")
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     def __transfer_to_gt_bank_accounts(self, account: Account):
         receiver_account_number = BankApp.__user_input("Enter account number to credit:")
@@ -201,7 +202,7 @@ Enter 2 to transfer to other bank accounts""")
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     def __intra_bank_transfer(self, account):
         receiver_account_number = BankApp.__user_input("Enter account number to credit:")
@@ -214,7 +215,7 @@ Enter 2 to transfer to other bank accounts""")
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     def __withdraw(self, account: Account):
         amount = BankApp.__user_input("Enter amount to withdraw:")
@@ -226,7 +227,7 @@ Enter 2 to transfer to other bank accounts""")
         except Exception as e:
             BankApp.__print_message(str(e))
         finally:
-            self.__go_to_main_menu(account)
+            self.__goto_main_menu(account)
 
     def __logout(self):
         BankApp.__print_message("Logging out...")
