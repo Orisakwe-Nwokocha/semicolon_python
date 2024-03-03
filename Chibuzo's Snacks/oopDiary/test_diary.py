@@ -7,7 +7,7 @@ from oopDiary.incorrect_password_error import IncorrectPasswordError
 
 class TestDiary(unittest.TestCase):
     def setUp(self):
-        self.diary = Diary("correctPassword")
+        self.diary = Diary("username", "correctPassword")
 
     def test_initial_state_diary_is_unlocked(self):
         self.assertFalse(self.diary.is_locked())

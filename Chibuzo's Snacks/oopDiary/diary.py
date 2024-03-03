@@ -3,9 +3,10 @@ from oopDiary.incorrect_password_error import IncorrectPasswordError
 
 
 class Diary:
-    def __init__(self, password):
-        self.__is_locked = False
+    def __init__(self, username: str, password: str):
+        self.__username = username
         self.__password = password
+        self.__is_locked = False
         self.__last_entry_created = 0
         self.__entries = []
 
@@ -47,6 +48,15 @@ class Diary:
 
         entry.update_title(new_title)
         entry.update_body(new_body)
+
+    def get_username(self):
+        return self.__username
+
+    def verify_password(self, password) -> bool:
+        return self.__password == password
+
+    def __eq__(self, other):
+        return self.__username == other.__username
 
     def __repr__(self):
         return f"Diary[locked: {self.__is_locked}, entries: {self.__entries}\n\t]"
