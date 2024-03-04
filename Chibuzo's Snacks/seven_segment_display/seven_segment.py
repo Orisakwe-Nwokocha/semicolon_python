@@ -13,6 +13,11 @@ class SevenSegmentDisplay:
         if not self.__isOn:
             return ""
 
+        segment = self.build_string(digits)
+
+        return segment + "\n"
+
+    def build_string(self, digits):
         segment = self.__display_a(digits)
         segment += self.__display_f(digits)
         segment += self.__display_b(digits)
@@ -22,8 +27,7 @@ class SevenSegmentDisplay:
         segment += self.__display_c(digits)
         segment += self.__display_extra(digits, 4, 2)
         segment += self.__display_d(digits)
-
-        return segment + "\n"
+        return segment
 
     @staticmethod
     def __display_a(digits: str) -> str:
@@ -67,22 +71,22 @@ class SevenSegmentDisplay:
 
     @staticmethod
     def __validate(digits):
-        SevenSegmentDisplay.check_for_non_digit_numbers(digits)
-        SevenSegmentDisplay.check_for_non_binary_numbers(digits)
-        SevenSegmentDisplay.validate_length(digits)
+        SevenSegmentDisplay.__check_for_non_digit_numbers(digits)
+        SevenSegmentDisplay.__check_for_non_binary_numbers(digits)
+        SevenSegmentDisplay.__validate_length(digits)
 
     @staticmethod
-    def check_for_non_digit_numbers(digits):
+    def __check_for_non_digit_numbers(digits):
         if not digits.isdigit():
             raise NonDigitNumberError("Binary number must be only digits")
 
     @staticmethod
-    def check_for_non_binary_numbers(digits):
+    def __check_for_non_binary_numbers(digits):
         if not all(digit in '01' for digit in digits):
             raise NonBinaryNumberError("Binary number must consist of only 0s and 1s")
 
     @staticmethod
-    def validate_length(digits):
+    def __validate_length(digits):
         if len(digits) != 8:
             raise ValueError("Binary number must be 8 digits long")
 
