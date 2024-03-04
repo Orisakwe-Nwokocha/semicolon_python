@@ -67,10 +67,22 @@ class SevenSegmentDisplay:
 
     @staticmethod
     def __validate(digits):
+        SevenSegmentDisplay.check_for_non_digit_numbers(digits)
+        SevenSegmentDisplay.check_for_non_binary_numbers(digits)
+        SevenSegmentDisplay.validate_length(digits)
+
+    @staticmethod
+    def check_for_non_digit_numbers(digits):
         if not digits.isdigit():
             raise NonDigitNumberError("Binary number must be only digits")
+
+    @staticmethod
+    def check_for_non_binary_numbers(digits):
         if not all(digit in '01' for digit in digits):
             raise NonBinaryNumberError("Binary number must consist of only 0s and 1s")
+
+    @staticmethod
+    def validate_length(digits):
         if len(digits) != 8:
             raise ValueError("Binary number must be 8 digits long")
 
@@ -82,6 +94,7 @@ if __name__ == "__main__":
     display = SevenSegmentDisplay()
     # digits_input = input("Enter binary number (8 digits long): ")
     # print(display.display_segment(digits_input))
+
     print(display.display_segment("11111110"))
     print(display.display_segment("01100111"))
     print(display.display_segment("01100001"))
