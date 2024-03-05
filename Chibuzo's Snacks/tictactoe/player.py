@@ -1,4 +1,4 @@
-from tictactoe.celltype import CellType
+from tictactoe.cell_type import CellType
 
 
 class Player:
