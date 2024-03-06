@@ -11,3 +11,9 @@ class Player:
 
     def get_id(self):
         return self.__player_id
+
+    def play(self, tic_tac_toe_game, square):
+        tic_tac_toe_game.mark_position(self.__player_id, square)
+
+    def __repr__(self):
+        return f"Player {self.get_id()}"
