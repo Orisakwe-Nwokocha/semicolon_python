@@ -4,9 +4,6 @@ from logisticsServices.logistics_services import LogisticsServices
 
 
 class LogisticsServicesTest(unittest.TestCase):
-    def test_given_0_successful_deliveries_when_calculated_then_riders_wage_is_0(self):
-        self.assertEqual(0, LogisticsServices.calculate_riders_wage(0))
-
     def test_given_25_successful_deliveries_when_calculated_then_riders_wage_is_9000(self):
         self.assertEqual(9000, LogisticsServices.calculate_riders_wage(25))
 
@@ -30,3 +27,9 @@ class LogisticsServicesTest(unittest.TestCase):
 
     def test_given_80_successful_deliveries_when_calculated_then_riders_wage_is_45000(self):
         self.assertEqual(45000, LogisticsServices.calculate_riders_wage(80))
+
+    def test_given_0_successful_value_error_is_raised(self):
+        self.assertRaises(ValueError, LogisticsServices.calculate_riders_wage, 0)
+
+    def test_given_101_successful_value_error_is_raised(self):
+        self.assertRaises(ValueError, LogisticsServices.calculate_riders_wage, 101)
