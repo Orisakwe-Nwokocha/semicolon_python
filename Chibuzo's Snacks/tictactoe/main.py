@@ -39,20 +39,29 @@ class Main:
 
         if choice:
             cls.__play_vs_computer(game, player_one)
-
-        # playVsHuman(playerOne);
+        cls.__play_vs_human(game, player_one)
 
     @classmethod
     def __play_vs_computer(cls, game: TicTacToe, player_one: Player):
         computer = game.get_players()[1]
 
         cls.__player_one_move(game, player_one)
-
         cls.__computer_move(game, computer)
 
         is_full = game.is_board_full()
         if not is_full:
             cls.__play_vs_computer(game, player_one)
+
+    @classmethod
+    def __play_vs_human(cls, game: TicTacToe, player_one: Player):
+        player_two = game.get_players()[1]
+
+        cls.__player_one_move(game, player_one)
+        cls.__player_two_move(game, player_two)
+
+        is_full = game.is_board_full()
+        if not is_full:
+            cls.__play_vs_human(game, player_one)
 
     @classmethod
     def __player_one_move(cls, game: TicTacToe, player_one: Player):
@@ -64,10 +73,27 @@ class Main:
                 player_one.play(game, int(player_one_position))
                 cls.__print_message("Display board", game.display_board())
 
-                cls.__check_game_status()
+                cls.__check_game_status(game)
                 is_invalid = False
             except Exception as e:
                 messagebox.showerror("Error", str(e))
+                cls.__print_message("Display board", game.display_board())
+
+    @classmethod
+    def __player_two_move(cls, game: TicTacToe, player_two: Player):
+        is_invalid = True
+
+        while is_invalid:
+            try:
+                player_two_position = cls.__user_input("Make your move", "Player 2, select a position (1-9)")
+                player_two.play(game, int(player_two_position))
+                cls.__print_message("Display board", game.display_board())
+
+                cls.__check_game_status(game)
+                is_invalid = False
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
+                cls.__print_message("Display board", game.display_board())
 
     @classmethod
     def __computer_move(cls, game: TicTacToe, computer: Player):
@@ -75,110 +101,44 @@ class Main:
 
         while is_invalid:
             computer_move = random.randint(1, 10)
-            print(computer_move)
             try:
                 computer.play(game, computer_move)
                 cls.__print_message("Display board", game.display_board())
 
-                cls.__check_game_status()
+                cls.__check_game_status(game)
                 is_invalid = False
             except (ValueError, InvalidPositionError):
                 pass
 
-    # isInvalidMove = true;
-    # while (isInvalidMove) {
-    # int computerMove = random.nextInt(1, 10);
-    # try {
-    # computer.play(game, computerMove);
-    # print(game.displayBoard(), "Display board");
-    #
-    # checkGameStatus();
-    # isInvalidMove = false;
-    # }
-    # catch(RuntimeException
-    # ignored) {}
+    @classmethod
+    def __check_game_status(cls, game: TicTacToe):
+        is_winner_none = game.get_winner() is None
 
-    # private
-    # static
-    # void
-    # playVsHuman(Player
-    # playerOne) {
-    #     Player
-    # playerTwo = game.getPlayers()[1];
-    #
-    # playerOneMove(playerOne);
-    # playerTwoMove(playerTwo);
-    #
-    # boolean
-    # gameIsOn = !game.isBoardFull();
-    # if (gameIsOn)
-    # playVsHuman(playerOne);
-    # }
-    #
-    # private
-    # static
-    # void
-    # playerTwoMove(Player
-    # playerTwo) {
-    #     isInvalidMove = true;
-    # while (isInvalidMove) {
-    # try {
-    # String playerTwoPosition = input("Player 2, select a position (1-9)");
-    # playerTwo.play(game, Integer.parseInt(playerTwoPosition));
-    # print(game.displayBoard(), "Display board");
-    #
-    # checkGameStatus();
-    # isInvalidMove = false;
-    # }
-    # catch(RuntimeException
-    # e) {
-    #     displayErrorMessage(e);
-    # }
-    # }
-    # }
-    #
+        if not is_winner_none:
+            cls.__declare_winner(game)
+        elif game.is_board_full():
+            cls.__declare_draw(game)
+        else:
+            pass
 
     @classmethod
-    def __check_game_status(cls):
-        pass
+    def __declare_winner(cls, game: TicTacToe):
+        cls.__print_message("Congratulations!", str(game.get_winner()) + " is the winner!!!")
+        cls.__print_message("Display board", game.display_board())
 
-    #     boolean
-    # isWinnerNull = game.getWinner() == null;
-    #
-    # if (!isWinnerNull)
-    # declareWinner();
-    # if (game.isBoardFull())
-    # declareDraw();
-    # }
+        cls.__exit()
 
-    # private
-    # static
-    # void
-    # declareDraw()
-    # {
-    #     print("Game ended in a draw", "Status");
-    # print(game.displayBoard(), "Display board");
-    # exit();
-    # }
-    #
-    # private
-    # static
-    # void
-    # exit()
-    # {
-    #     print("Thank you for playing our game!!!", "Goodbye");
-    # System.exit(0);
-    # }
-    #
-    # private
-    # static
-    # void
-    # declareWinner()
-    # {
-    #     print(game.getWinner().toString() + " is the winner!!!", "Champion");
-    # print(game.displayBoard(), "Display board");
-    # exit();
-    # }
+    @classmethod
+    def __declare_draw(cls, game: TicTacToe):
+        cls.__print_message("Draw", "Game ended in a draw.")
+        cls.__print_message("Display board", game.display_board())
+
+        cls.__exit()
+
+    @classmethod
+    def __exit(cls):
+        cls.__print_message("Goodbye", "Thanks for playing!")
+        exit(0)
 
     @classmethod
     def __print_message(cls, title: str, message: str):

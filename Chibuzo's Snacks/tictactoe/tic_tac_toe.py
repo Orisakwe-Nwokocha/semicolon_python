@@ -14,8 +14,8 @@ class TicTacToe:
         player_one_cell_type: CellType = CellType.X if player_one_id == 1 else CellType.O
         player_two_cell_type: CellType = CellType.O if player_two_id == 2 else CellType.X
 
-        self.__playerOne: Player = Player(player_one_id, player_one_cell_type)
-        self.__playerTwo: Player = Player(player_two_id, player_two_cell_type)
+        self.__playerOne: Player = Player(1, player_one_cell_type)
+        self.__playerTwo: Player = Player(2, player_two_cell_type)
 
         self.__winner = None
 
@@ -38,17 +38,16 @@ class TicTacToe:
 
     def __is_winner(self) -> bool:
         for index in range(3):
-            if self.__is_horizontal(index):
+            if self.__is_horizontal(index) or self.__is_vertical(index):
                 return True
-            elif self.__is_vertical(index):
-                return True
-        if self.__is_left_diagonal():
+
+        if self.__is_left_diagonal() or self.__is_right_diagonal():
             return True
-        else:
-            return self.__is_right_diagonal()
+        # else:
+        #     return self.__is_right_diagonal()
 
     def __is_right_diagonal(self) -> bool:
-        return self.__is_winner_helper(0, -2, 1, -1)
+        return self.__is_winner_helper(0, 2, 1, -1)
 
     def __is_left_diagonal(self) -> bool:
         return self.__is_winner_helper(0, 0, 1, 1)
@@ -64,8 +63,8 @@ class TicTacToe:
         number_of_o = 0
 
         for index in range(3):
-            row = (start_row + index) * row_increment
-            column = (start_column + index) * column_increment
+            row = start_row + (index * row_increment)
+            column = start_column + (index * column_increment)
 
             cell_type: CellType = self.__position_board[row][column]
 

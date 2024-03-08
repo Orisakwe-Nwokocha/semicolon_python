@@ -108,15 +108,15 @@ class TicTacToeTest(unittest.TestCase):
     def test_that_game_can_determine_winner_horizontally(self):
         self.tic_tac_toe_game.mark_position(1, 1)
         self.tic_tac_toe_game.mark_position(1, 2)
-        self.tic_tac_toe_game.mark_position(1, 3)
+        self.tic_tac_toe_game.mark_position(1,  3)
 
         self.assertIsNotNone(self.tic_tac_toe_game.get_winner())
         self.assertEqual(CellType.X, self.tic_tac_toe_game.get_winner().get_cell_type())
 
     def test_that_game_can_determine_winner_vertically(self):
-        self.tic_tac_toe_game.mark_position(2, 1)
-        self.tic_tac_toe_game.mark_position(2, 4)
-        self.tic_tac_toe_game.mark_position(2, 7)
+        self.tic_tac_toe_game.mark_position(2, 3)
+        self.tic_tac_toe_game.mark_position(2, 6)
+        self.tic_tac_toe_game.mark_position(2, 9)
 
         self.assertIsNotNone(self.tic_tac_toe_game.get_winner())
         self.assertEqual(CellType.O, self.tic_tac_toe_game.get_winner().get_cell_type())
@@ -131,6 +131,7 @@ class TicTacToeTest(unittest.TestCase):
 
     def test_that_game_can_determine_winner_right_diagonal(self):
         self.tic_tac_toe_game.mark_position(2, 3)
+        print(self.tic_tac_toe_game.get_winner())
         self.tic_tac_toe_game.mark_position(2, 5)
         self.tic_tac_toe_game.mark_position(2, 7)
 
